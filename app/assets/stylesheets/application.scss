@@ -1,0 +1,169 @@
+// Variables
+$primary-color: #0d6efd;
+$secondary-color: #6c757d;
+$dark-color: #212529;
+$success-color: #198754;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+$font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$border-radius: 8px;
+$box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+// Base
+body {
+  font-family: $font-family;
+  background-color: #f8f9fa;
+  color: $dark-color;
+}
+
+// Navbar
+.navbar {
+  box-shadow: $box-shadow;
+
+  .navbar-brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    &:hover {
+      color: $warning-color !important;
+    }
+  }
+
+  .nav-link {
+    font-weight: 500;
+    &:hover {
+      color: $warning-color !important;
+    }
+  }
+}
+
+// Cards
+.card {
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-title {
+    font-weight: 600;
+    color: $dark-color;
+  }
+
+  .card-footer {
+    background-color: transparent;
+    border-top: 1px solid #f0f0f0;
+    padding: 12px;
+  }
+}
+
+// Buttons
+.btn {
+  border-radius: $border-radius;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &.btn-primary {
+    background-color: $primary-color;
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  &.btn-success {
+    background-color: $success-color;
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// Breadcrumbs
+.breadcrumb {
+  background-color: transparent;
+  padding: 0;
+
+  .breadcrumb-item {
+    font-size: 0.9rem;
+
+    &.active {
+      color: $secondary-color;
+    }
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Tables
+.table {
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+// Flash messages
+.alert {
+  border-radius: $border-radius;
+  border: none;
+  font-weight: 500;
+}
+
+// Badges
+.badge {
+  border-radius: $border-radius;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+// Product show page
+.product-show {
+  .product-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $primary-color;
+  }
+}
+
+// Footer
+footer {
+  background-color: $dark-color;
+  color: white;
+  padding: 30px 0;
+  margin-top: 60px;
+
+  a {
+    color: #adb5bd;
+    text-decoration: none;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+}

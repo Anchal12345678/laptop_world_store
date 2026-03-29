@@ -3,6 +3,9 @@ ActiveAdmin.register_page "Dashboard" do
 
   content title: proc { I18n.t("active_admin.dashboard") } do
     # Stats Row
+    div style: "text-align: right; margin-bottom: 20px;" do
+  a "🛍️ View Customer Store", href: "/", class: "button", style: "background: #0d6efd; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none;"
+end
     columns do
       column do
         panel "Total Products" do

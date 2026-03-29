@@ -1,0 +1,28 @@
+<div class="col-md-4 mb-4">
+  <div class="card h-100 shadow-sm">
+    <% if product.image.attached? %>
+      <%= image_tag product.image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+    <% else %>
+      <div class="bg-light text-center py-5">
+        <span class="fs-1">💻</span>
+      </div>
+    <% end %>
+    <div class="card-body">
+      <h5 class="card-title"><%= product.name %></h5>
+      <p class="card-text text-muted"><%= truncate(product.description, length: 80) %></p>
+      <% if product.on_sale && product.sale_price %>
+        <p class="card-text">
+          <span class="text-danger fw-bold">$<%= product.sale_price %></span>
+          <span class="text-muted text-decoration-line-through ms-2">$<%= product.current_price %></span>
+          <span class="badge bg-danger ms-2">SALE</span>
+        </p>
+      <% else %>
+        <p class="card-text fw-bold">$<%= product.current_price %></p>
+      <% end %>
+    </div>
+    <div class="card-footer">
+      <%= link_to "View Details", product_path(product), class: "btn btn-primary w-100 mb-2" %>
+      <%= button_to "🛒 Add to Cart", cart_add_path(product), method: :post, class: "btn btn-success w-100" %>
+    </div>
+  </div>
+</div>

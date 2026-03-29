@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <h2>📦 My Orders</h2>
+  <% if @orders.empty? %>
+    <div class="alert alert-info mt-3">
+      You have no orders yet.
+      <%= link_to "Start Shopping", products_path, class: "btn btn-primary ms-2" %>
+    </div>
+  <% else %>
+    <table class="table table-bordered mt-3">
+      <thead class="table-dark">
+        <tr><th>Order #</th><th>Date</th><th>Status</th><th>Total</th><th>Details</th></tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td>#<%= order.id %></td>
+            <td><%= order.created_at.strftime("%B %d, %Y") %></td>
+            <td>
+              <span class="badge bg-<%= order.status == 'pending' ? 'warning' : order.status == 'paid' ? 'success' : 'info' %>">
+                <%= order.status.capitalize %>
+              </span>
+            </td>
+            <td>$<%= order.total.round(2) %></td>
+            <td><%= link_to "View", order_path(order), class: "btn btn-sm btn-primary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

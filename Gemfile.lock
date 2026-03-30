@@ -127,6 +127,8 @@ GEM
     erb (4.0.4)
       cgi (>= 0.3.3)
     erubi (1.13.1)
+    faker (3.6.1)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.4)
     formtastic (6.0.0)
       actionpack (>= 7.2.0)
@@ -350,6 +352,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  faker
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

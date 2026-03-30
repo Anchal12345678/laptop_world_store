@@ -2,6 +2,13 @@ ActiveAdmin.register_page "Dashboard" do
   menu priority: 1, label: proc { I18n.t("active_admin.dashboard") }
 
   content title: proc { I18n.t("active_admin.dashboard") } do
+
+    div style: "text-align: right; margin-bottom: 20px;" do
+      a "🛍️ View Customer Store",
+        href: "/",
+        style: "background: #0d6efd; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold;"
+    end
+
     columns do
       column do
         panel "Total Products" do
@@ -59,5 +66,6 @@ ActiveAdmin.register_page "Dashboard" do
         para "All products are well stocked!", style: "color: green;"
       end
     end
+
   end
 end

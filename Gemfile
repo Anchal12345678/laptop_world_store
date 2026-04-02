@@ -11,8 +11,8 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 gem "faker"
+gem "stripe"
 gem "dotenv-rails", groups: [:development, :test]
-
 # Auth
 gem "devise"
 

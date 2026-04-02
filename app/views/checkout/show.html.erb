@@ -3,11 +3,18 @@
   <div class="row">
     <div class="col-md-7">
       <div class="card mb-4">
-        <div class="card-header bg-dark text-white"><h5 class="mb-0">Order Summary</h5></div>
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Order Summary</h5>
+        </div>
         <div class="card-body">
           <table class="table">
             <thead>
-              <tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+              <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
             </thead>
             <tbody>
               <% @cart_items.each do |item| %>
@@ -20,17 +27,29 @@
               <% end %>
             </tbody>
             <tfoot>
-              <tr><td colspan="3" class="text-end">Subtotal:</td><td>$<%= @subtotal.round(2) %></td></tr>
-              <tr><td colspan="3" class="text-end">Tax:</td><td id="tax-amount">$<%= @tax.round(2) %></td></tr>
-              <tr class="fw-bold"><td colspan="3" class="text-end">Total:</td><td id="total-amount">$<%= @total.round(2) %></td></tr>
+              <tr>
+                <td colspan="3" class="text-end">Subtotal:</td>
+                <td>$<%= @subtotal.round(2) %></td>
+              </tr>
+              <tr>
+                <td colspan="3" class="text-end">Tax:</td>
+                <td id="tax-amount">$<%= @tax.round(2) %></td>
+              </tr>
+              <tr class="fw-bold">
+                <td colspan="3" class="text-end">Total:</td>
+                <td id="total-amount">$<%= @total.round(2) %></td>
+              </tr>
             </tfoot>
           </table>
         </div>
       </div>
     </div>
+
     <div class="col-md-5">
       <div class="card">
-        <div class="card-header bg-dark text-white"><h5 class="mb-0">Your Details</h5></div>
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Your Details</h5>
+        </div>
         <div class="card-body">
           <%= form_with url: checkout_path, method: :post, local: true do |f| %>
             <div class="mb-3">
@@ -39,22 +58,28 @@
             </div>
             <div class="mb-3">
               <%= f.label :email, "Email", class: "form-label" %>
-              <%= f.email_field :email, value: current_user.email, class: "form-control", required: true %>
+              <%= f.email_field :email, value: current_user.email,
+                  class: "form-control", required: true %>
             </div>
             <div class="mb-3">
               <%= f.label :address, "Street Address", class: "form-label" %>
-              <%= f.text_field :address, class: "form-control", required: true %>
+              <%= f.text_field :address, class: "form-control", required: true,
+                  value: current_user.street_address %>
             </div>
             <div class="mb-3">
               <%= f.label :province_id, "Province", class: "form-label" %>
               <%= f.select :province_id,
-                  options_from_collection_for_select(@provinces, :id, :name),
+                  options_from_collection_for_select(
+                    @provinces, :id, :name, current_user.province_id
+                  ),
                   { include_blank: "Select your province" },
-                  { class: "form-select", required: true, onchange: "updateTax(this)" } %>
+                  { class: "form-select", required: true,
+                    onchange: "updateTax(this)" } %>
             </div>
             <div class="mb-3">
               <%= f.label :postal_code, "Postal Code", class: "form-label" %>
-              <%= f.text_field :postal_code, class: "form-control", required: true %>
+              <%= f.text_field :postal_code, class: "form-control", required: true,
+                  value: current_user.postal_code %>
             </div>
             <div class="p-3 bg-light rounded mb-3">
               <p class="mb-1">Subtotal: <strong>$<%= @subtotal.round(2) %></strong></p>
@@ -68,6 +93,7 @@
     </div>
   </div>
 </div>
+
 <script>
 const subtotal = <%= @subtotal %>;
 const provinces = {

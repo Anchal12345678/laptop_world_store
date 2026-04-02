@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active">Contact</li>
+    </ol>
+  </nav>
+  <% if @page %>
+    <h1><%= @page.title %></h1>
+    <div class="card mt-3">
+      <div class="card-body">
+        <p><%= simple_format(@page.content) %></p>
+      </div>
+    </div>
+  <% else %>
+    <h1>Contact Us</h1>
+    <div class="card mt-3">
+      <div class="card-body">
+        <p>📍 <strong>Address:</strong> 123 Main Street, Winnipeg, Manitoba, R3C 0A1</p>
+        <p>📞 <strong>Phone:</strong> (204) 555-0123</p>
+        <p>📧 <strong>Email:</strong> info@laptopworldstore.com</p>
+        <p>🕒 <strong>Hours:</strong> Monday - Friday 9am - 6pm</p>
+      </div>
+    </div>
+  <% end %>
+</div>

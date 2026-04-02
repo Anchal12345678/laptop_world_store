@@ -1,3 +1,5 @@
+require 'csv'
+
 # Create Admin User
 AdminUser.find_or_create_by!(email: 'admin@example.com') do |admin|
   admin.password = 'password'
@@ -45,6 +47,23 @@ provinces.each do |p|
   end
 end
 puts "Created #{Province.count} provinces"
+
+# Import from CSV dataset (feature 1.8)
+csv_file = Rails.root.join('db', 'laptops.csv')
+if File.exist?(csv_file)
+  CSV.foreach(csv_file, headers: true) do |row|
+    category = Category.find_by(name: row['category'])
+    next unless category
+    Product.find_or_create_by!(name: row['name']) do |p|
+      p.description = row['description']
+      p.current_price = row['price'].to_f
+      p.stock_quantity = row['stock'].to_i
+      p.category = category
+      p.on_sale = false
+    end
+  end
+  puts "Imported products from CSV dataset"
+end
 
 # Real laptop names per category
 gaming_laptops = [

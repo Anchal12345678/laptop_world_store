@@ -123,6 +123,10 @@ GEM
       railties (>= 7.0)
       responders
       warden (~> 1.2.3)
+    dotenv (3.2.0)
+    dotenv-rails (3.2.0)
+      dotenv (= 3.2.0)
+      railties (>= 6.1)
     drb (2.2.3)
     erb (4.0.4)
       cgi (>= 0.3.3)
@@ -352,6 +356,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  dotenv-rails
   faker
   image_processing (~> 1.2)
   importmap-rails

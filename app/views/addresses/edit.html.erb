@@ -1,0 +1,63 @@
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active">My Address</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <% if current_user.street_address.present? %>
+        <div class="alert alert-info mb-4">
+          <h5>📍 Your Current Saved Address:</h5>
+          <p class="mb-1"><strong>Street:</strong> <%= current_user.street_address %></p>
+          <p class="mb-1"><strong>City:</strong> <%= current_user.city %></p>
+          <p class="mb-1"><strong>Province:</strong> <%= current_user.province&.name %></p>
+          <p class="mb-0"><strong>Postal Code:</strong> <%= current_user.postal_code %></p>
+        </div>
+      <% end %>
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h4 class="mb-0">📍 My Address Details</h4>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @user, url: update_address_path,
+              method: :patch, local: true do |f| %>
+            <div class="mb-3">
+              <%= f.label :street_address, "Street Address", class: "form-label" %>
+              <%= f.text_field :street_address, class: "form-control",
+                  placeholder: "123 Main Street",
+                  value: @user.street_address %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :city, "City", class: "form-label" %>
+              <%= f.text_field :city, class: "form-control",
+                  placeholder: "Winnipeg",
+                  value: @user.city %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :province_id, "Province", class: "form-label" %>
+              <%= f.select :province_id,
+                  options_from_collection_for_select(
+                    @provinces, :id, :name, @user.province_id
+                  ),
+                  { include_blank: "Select your province" },
+                  { class: "form-select" } %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :postal_code, "Postal Code", class: "form-label" %>
+              <%= f.text_field :postal_code, class: "form-control",
+                  placeholder: "R3C 0A1",
+                  value: @user.postal_code %>
+            </div>
+            <%= f.submit "Save Address", class: "btn btn-success w-100 btn-lg" %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

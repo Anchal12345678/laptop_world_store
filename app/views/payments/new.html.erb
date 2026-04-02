@@ -1,0 +1,103 @@
+<div class="container mt-4">
+  <h2>💳 Payment</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Order Summary</h5>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr><th>Product</th><th>Qty</th><th>Total</th></tr>
+            </thead>
+            <tbody>
+              <% @cart_items.each do |item| %>
+                <tr>
+                  <td><%= item[:product].name %></td>
+                  <td><%= item[:quantity] %></td>
+                  <td>$<%= item[:line_total].round(2) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr><td colspan="2" class="text-end">Subtotal:</td><td>$<%= @subtotal.round(2) %></td></tr>
+              <tr><td colspan="2" class="text-end">Tax:</td><td>$<%= @tax.round(2) %></td></tr>
+              <tr class="fw-bold"><td colspan="2" class="text-end">Total:</td><td>$<%= @total.round(2) %></td></tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">💳 Enter Card Details</h5>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-info">
+            <strong>Test Mode:</strong> Use card number <code>4242 4242 4242 4242</code>
+            with any future date and any CVC.
+          </div>
+
+          <%= form_with url: create_payment_path, method: :post, 
+              local: true, id: "payment-form" do |f| %>
+
+            <%= f.hidden_field :province_id, value: current_user.province_id %>
+
+            <div class="mb-3">
+              <%= label_tag :card, "Card Details", class: "form-label" %>
+              <div id="card-element" class="form-control" style="height: 40px; padding-top: 10px;">
+              </div>
+              <div id="card-errors" class="text-danger mt-1"></div>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg w-100" id="submit-btn">
+              💳 Pay $<%= @total.round(2) %> CAD
+            </button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  var stripe = Stripe('<%= @stripe_publishable_key %>');
+  var elements = stripe.elements();
+  var cardElement = elements.create('card');
+  cardElement.mount('#card-element');
+
+  cardElement.on('change', function(event) {
+    var displayError = document.getElementById('card-errors');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  });
+
+  var form = document.getElementById('payment-form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    document.getElementById('submit-btn').disabled = true;
+    document.getElementById('submit-btn').textContent = 'Processing...';
+
+    stripe.createToken(cardElement).then(function(result) {
+      if (result.error) {
+        document.getElementById('card-errors').textContent = result.error.message;
+        document.getElementById('submit-btn').disabled = false;
+        document.getElementById('submit-btn').textContent = 'Pay $<%= @total.round(2) %> CAD';
+      } else {
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', result.token.id);
+        form.appendChild(hiddenInput);
+        form.submit();
+      }
+    });
+  });
+</script>

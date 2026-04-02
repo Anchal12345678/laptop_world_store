@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active">About</li>
+    </ol>
+  </nav>
+  <% if @page %>
+    <h1><%= @page.title %></h1>
+    <div class="card mt-3">
+      <div class="card-body">
+        <p><%= simple_format(@page.content) %></p>
+      </div>
+    </div>
+  <% else %>
+    <h1>About Laptop World Store</h1>
+    <div class="card mt-3">
+      <div class="card-body">
+        <p>💻 <strong>Laptop World Store</strong> is a Winnipeg-based electronics retailer
+        specializing in laptops and portable computing devices.</p>
+        <p>We have been operating for over eight years and currently employ
+        approximately ten staff members.</p>
+        <p>We sell laptops from well-known brands such as Dell, HP, Lenovo,
+        ASUS, Acer, and Apple.</p>
+        <p>Our mission is to provide the best laptops at the best prices
+        to customers across Canada.</p>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,11 +1,10 @@
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+  <li class="breadcrumb-item"><%= link_to "Categories", categories_path %></li>
+  <li class="breadcrumb-item active"><%= @category.name %></li>
+<% end %>
+
 <div class="container mt-4">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
-      <li class="breadcrumb-item"><%= link_to "Categories", categories_path %></li>
-      <li class="breadcrumb-item active"><%= @category.name %></li>
-    </ol>
-  </nav>
   <h2 class="mb-2"><%= @category.name %></h2>
   <p class="text-muted mb-4"><%= @category.description %></p>
   <div class="row">

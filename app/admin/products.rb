@@ -1,6 +1,7 @@
 ActiveAdmin.register Product do
   permit_params :name, :description, :current_price, :sale_price,
-                :on_sale, :stock_quantity, :category_id, :image
+              :on_sale, :stock_quantity, :category_id, :image,
+              tag_ids: []
 
   filter :name
   filter :category
@@ -27,18 +28,20 @@ ActiveAdmin.register Product do
   end
 
   form do |f|
-    f.inputs "Product Details" do
-      f.input :name
-      f.input :description
-      f.input :category
-      f.input :current_price, min: 0.01
-      f.input :sale_price, min: 0.01, required: false
-      f.input :on_sale
-      f.input :stock_quantity, min: 0
-      f.input :image, as: :file
-    end
-    f.actions
+  f.inputs "Product Details" do
+    f.input :name
+    f.input :description
+    f.input :category
+    f.input :current_price, min: 0.01
+    f.input :sale_price, min: 0.01, required: false
+    f.input :on_sale
+    f.input :stock_quantity, min: 0
+    f.input :tags, as: :check_boxes,
+            collection: Tag.all
+    f.input :image, as: :file
   end
+  f.actions
+end
 
   show do
     attributes_table do

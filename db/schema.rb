@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_02_034854) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_13_055343) do
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -112,6 +112,13 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_02_034854) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "product_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -130,6 +137,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_02_034854) do
     t.decimal "gst", precision: 10
     t.decimal "pst", precision: 10
     t.decimal "hst", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

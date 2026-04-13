@@ -1,7 +1,9 @@
 <div class="col-md-4 mb-4">
   <div class="card h-100 shadow-sm">
     <% if product.image.attached? %>
-      <%= image_tag product.image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+      <%= image_tag product.image.variant(:thumb),
+          class: "card-img-top",
+          style: "height: 200px; object-fit: cover;" %>
     <% else %>
       <div class="bg-light text-center py-5">
         <span class="fs-1">💻</span>

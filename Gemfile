@@ -13,6 +13,7 @@ gem "bootsnap", require: false
 gem "faker"
 gem "stripe"
 gem "dotenv-rails", groups: [:development, :test]
+gem "image_processing", "~> 1.2"
 # Auth
 gem "devise"
 

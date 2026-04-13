@@ -10,10 +10,10 @@ class AddressesController < ApplicationController
     @user = current_user
     @provinces = Province.order(:name)
     if @user.update(address_params)
-      flash[:notice] = "Address saved successfully!"
+      flash[:notice] = 'Address saved successfully!'
       redirect_to root_path
     else
-      flash[:alert] = "Could not save address!"
+      flash[:alert] = 'Could not save address!'
       render :edit
     end
   end
@@ -22,6 +22,6 @@ class AddressesController < ApplicationController
 
   def address_params
     params.require(:user).permit(:street_address, :city,
-                                  :postal_code, :province_id)
+                                 :postal_code, :province_id)
   end
 end

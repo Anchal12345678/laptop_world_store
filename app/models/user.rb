@@ -8,12 +8,12 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["id", "email", "street_address", "city", 
-     "postal_code", "province_id", "created_at", "updated_at"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id email street_address city
+       postal_code province_id created_at updated_at]
   end
 
-  def self.ransackable_associations(auth_object = nil)
-    ["orders", "addresses", "province"]
+  def self.ransackable_associations(_auth_object = nil)
+    %w[orders addresses province]
   end
 end

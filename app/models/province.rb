@@ -5,11 +5,11 @@ class Province < ApplicationRecord
   validates :pst, numericality: { greater_than_or_equal_to: 0 }
   validates :hst, numericality: { greater_than_or_equal_to: 0 }
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["id", "name", "gst", "pst", "hst", "created_at", "updated_at"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id name gst pst hst created_at updated_at]
   end
 
-  def self.ransackable_associations(auth_object = nil)
+  def self.ransackable_associations(_auth_object = nil)
     []
   end
 

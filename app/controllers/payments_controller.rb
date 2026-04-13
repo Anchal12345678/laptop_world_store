@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
   def new
     @cart = session[:cart] || {}
     if @cart.empty?
-      redirect_to cart_path, alert: "Your cart is empty!"
+      redirect_to cart_path, alert: 'Your cart is empty!'
       return
     end
 
@@ -13,19 +13,19 @@ class PaymentsController < ApplicationController
 
     @cart.each do |product_id, quantity|
       product = Product.find_by(id: product_id)
-      if product
-        price = product.on_sale && product.sale_price ? product.sale_price : product.current_price
-        line_total = price * quantity
-        @subtotal += line_total
-        @cart_items << { product: product, quantity: quantity,
-                         price: price, line_total: line_total }
-      end
+      next unless product
+
+      price = product.on_sale && product.sale_price ? product.sale_price : product.current_price
+      line_total = price * quantity
+      @subtotal += line_total
+      @cart_items << { product: product, quantity: quantity,
+                       price: price, line_total: line_total }
     end
 
     @provinces = Province.order(:name)
     @tax = @subtotal * 0.05
     @total = @subtotal + @tax
-    @stripe_publishable_key = ENV['STRIPE_PUBLISHABLE_KEY']
+    @stripe_publishable_key = ENV.fetch('STRIPE_PUBLISHABLE_KEY', nil)
   end
 
   def create
@@ -56,7 +56,7 @@ class PaymentsController < ApplicationController
 
       order = Order.create!(
         user: current_user,
-        status: "paid",
+        status: 'paid',
         subtotal: @subtotal,
         tax: tax,
         total: total,
@@ -65,22 +65,21 @@ class PaymentsController < ApplicationController
 
       @cart.each do |product_id, quantity|
         product = Product.find_by(id: product_id)
-        if product
-          price = product.on_sale && product.sale_price ? product.sale_price : product.current_price
-          OrderItem.create!(
-            order: order,
-            product: product,
-            quantity: quantity,
-            unit_price: price,
-            line_total: price * quantity
-          )
-        end
+        next unless product
+
+        price = product.on_sale && product.sale_price ? product.sale_price : product.current_price
+        OrderItem.create!(
+          order: order,
+          product: product,
+          quantity: quantity,
+          unit_price: price,
+          line_total: price * quantity
+        )
       end
 
       session[:cart] = {}
       flash[:notice] = "Payment successful! Order ##{order.id} placed!"
       redirect_to order_path(order)
-
     rescue Stripe::CardError => e
       flash[:alert] = "Payment failed: #{e.message}"
       redirect_to new_payment_path

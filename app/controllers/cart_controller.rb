@@ -5,12 +5,12 @@ class CartController < ApplicationController
     @total = 0
     @cart.each do |product_id, quantity|
       product = Product.find_by(id: product_id)
-      if product
-        price = product.on_sale && product.sale_price ? product.sale_price : product.current_price
-        line_total = price * quantity
-        @total += line_total
-        @cart_items << { product: product, quantity: quantity, price: price, line_total: line_total }
-      end
+      next unless product
+
+      price = product.on_sale && product.sale_price ? product.sale_price : product.current_price
+      line_total = price * quantity
+      @total += line_total
+      @cart_items << { product: product, quantity: quantity, price: price, line_total: line_total }
     end
   end
 
@@ -25,7 +25,7 @@ class CartController < ApplicationController
 
   def update
     session[:cart] ||= {}
-    if params[:quantity].to_i > 0
+    if params[:quantity].to_i.positive?
       session[:cart][params[:id]] = params[:quantity].to_i
     else
       session[:cart].delete(params[:id])
@@ -36,7 +36,7 @@ class CartController < ApplicationController
   def remove
     session[:cart] ||= {}
     session[:cart].delete(params[:id])
-    flash[:notice] = "Item removed from cart"
+    flash[:notice] = 'Item removed from cart'
     redirect_to cart_path
   end
 end

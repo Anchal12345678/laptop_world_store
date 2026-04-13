@@ -14,21 +14,23 @@ gem "faker"
 gem "stripe"
 gem "dotenv-rails", groups: [:development, :test]
 gem "image_processing", "~> 1.2"
+
 # Auth
 gem "devise"
 
 # Admin dashboard
 gem "activeadmin"
 
-# Pagination (use kaminari NOT will_paginate - they conflict)
+# Pagination
 gem "kaminari"
 
 # Bootstrap 5
 gem "bootstrap", "~> 5.3"
 gem "sassc-rails"
 
-# Image processing for Active Storage
-gem "image_processing", "~> 1.2"
+# Rubocop
+gem "rubocop-rails", require: false
+gem "rubocop-performance", require: false
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

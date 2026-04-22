@@ -33,7 +33,7 @@ gem "rubocop-rails", require: false
 gem "rubocop-performance", require: false
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
 end
 
 group :development do

@@ -43,7 +43,7 @@ class CheckoutController < ApplicationController
     total = @subtotal + tax
     order = Order.create!(
       user: current_user,
-      status: 'pending',
+      status: 'new',
       subtotal: @subtotal,
       tax: tax,
       total: total

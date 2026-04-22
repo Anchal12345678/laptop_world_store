@@ -66,7 +66,7 @@ ActiveAdmin.register Order do
   form do |f|
     f.inputs "Update Order Status" do
       f.input :status, as: :select,
-              collection: ["pending", "paid", "shipped"]
+             collection: ["new", "paid", "shipped"]
     end
     f.actions
   end
